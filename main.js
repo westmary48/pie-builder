@@ -23,6 +23,26 @@ const domStringBuilder = (arrayToPrint) => {
     printToDom('ingredient-container', domString);
   };
 
+const deleteFunction = (e) => {
+    const buttonId = e.target.id;
+    ingredients.forEach((ingredient, index) => {
+        if(ingredient.id === buttonId) {
+            ingredients.splice(index, 1);
+        }
+    })
+
+    domStringBuilder(ingredients);
+    addDeleteEvents();
+}
+
+const addDeleteEvents = () => {
+    // this function NEEDS to go first
+  const deleteButtons = document.getElementsByClassName('deleteButton');
+    for(let i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', deleteFunction);
+    }
+};
+
 const addIngredient = (e) => {
     e.preventDefault();
     const inputText = inputIngredient.value;
@@ -33,6 +53,7 @@ const addIngredient = (e) => {
     ingredients.push(newIngredient);
     ingredientCounter ++;
     domStringBuilder(ingredients);
+    addDeleteEvents();
     inputIngredient.value = '';
 }
 
